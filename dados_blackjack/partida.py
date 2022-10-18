@@ -1,13 +1,33 @@
 import random
 import menu
 from jugador import Jugador
-""" 
-    Section de variables globales
-"""
+# Section de variables globales
 cant_jugadores=0
 apuesta_general=5000
+total_apuesta=0
 jugadores=[] # Variable que guarda la lista de jugadores
 
+# Generamos colores por cada jugador
+def generarColor():
+    tiro=random.randint(31,37)
+    return tiro
+# Mostramos todos los datos de los jugadores
+def mostrarTodo():
+    datos=""
+    for i in range(1,cant_jugadores+1):
+        datos+=f"""\033[1;{jugadores[i].color}m
+        ==============| LOS DATOS DEL JUGADOR {i} |==============
+        NOMBRE DEL JUGADOR      : {jugadores[i].nombre}
+        MONTO INICIAL           : {jugadores[i].dinero_inicia}
+        SUMA DE PUNTOS          : {jugadores[i].suma_tiros}
+        PARTIDAS DE PERDIDAS    : {jugadores[i].perdidas}
+        TOTAL TIROS             : {jugadores[i].total_tiros}
+        NUMERO DE TIROS         : {jugadores[i].total_tiros}
+        NUMERO DE TIROS (1)     : {jugadores[i].tiros_uno}
+        TURNO                   : {jugadores[i].turno}
+        PLANTADO                : {jugadores[i].planto}
+        """
+    print(datos)
 # Mostramos los dados por cada tiro del jugador
 def pintarDados(d1,d2):
     if (d2==0): # Para cuando se requiera solo pintar uno
@@ -31,12 +51,6 @@ def generarTiro():
     tiro=random.randrange(6)+1
     return tiro
 
-""" def nose(x):
-    if x>0:
-        print(generarTiro())
-        return nose(x-1)
-    return x
-x=nose(2) """
 # Determinamos cuantos van a jugar esta pártida
 def cuantosJugadores():
     global cant_jugadores, apuesta_general
@@ -45,23 +59,29 @@ def cuantosJugadores():
             cant_jugadores=int(input('¿Cuántos personas van a jugar? -> '))
             apuesta=int(input('¿Con cuánto van a jugar? (Ingrese 0 si quieren dejarla por defecto) -> '))
             if (apuesta!=0):
-                apuesta_general=apuesta
+                if (apuesta>=500):
+                    apuesta_general=apuesta
+                else:
+                    raise ValueError(menu.mensaje_monto())
             break
         except ValueError:
             menu.mensaje_error()
+    menu.limpiar()
 # Le ponemos los datos por defecto a la casa
 def iniciarCasa():
     # Se sigue el orden segun nuestra clase
     dado=0
+    color=35
     turno=False
     nombre='Casa'
     planto=False
     tiros_uno=0
     suma_tiros=0
     total_tiros=0
+    perdidas=0
     dinero_inicia=apuesta_general
     # Creamos nuestro clase y le pasamos los datos
-    nuevo_jugador=Jugador(dado, turno, nombre, planto, tiros_uno, suma_tiros, total_tiros, dinero_inicia)
+    nuevo_jugador=Jugador(dado, color, turno, nombre, planto, perdidas, tiros_uno, suma_tiros, total_tiros, dinero_inicia)
     # Agregamos el nuevo jugador a nuestra lista
     jugadores.append(nuevo_jugador)
 # Pedimos los datos de todas las personas e inicializamos todo por defecto
@@ -69,20 +89,24 @@ def pedirJugadores():
     for i in range(0, cant_jugadores):
         # Se sigue el orden segun nuestra clase
         dado=0
+        color=generarColor()
         turno=False
         nombre=input('Ingrese el nombre del jugador: ')
         planto=False
         tiros_uno=0
         suma_tiros=0
         total_tiros=0
+        perdidas=0
         dinero_inicia=apuesta_general
         # Creamos nuestro clase y le pasamos los datos
-        nuevo_jugador=Jugador(dado, turno, nombre, planto, tiros_uno, suma_tiros, total_tiros, dinero_inicia)
+        nuevo_jugador=Jugador(dado, color, turno, nombre, planto, perdidas, tiros_uno, suma_tiros, total_tiros, dinero_inicia)
         # Agregamos el nuevo jugador a nuestra lista
         jugadores.append(nuevo_jugador)
+        menu.limpiar()
 # metodo principal del juego
 def main():
     cuantosJugadores()
     iniciarCasa()
     pedirJugadores()
+    mostrarTodo()
     input()

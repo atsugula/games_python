@@ -69,3 +69,10 @@ def mensaje_error():
         ------------- Presione cualquier tecla para continuar -------------""")
     input()
     limpiar()
+
+def mensaje_monto():
+    print("""
+        Ups!!! Ingreso una opción no válida, ingrese un número mayor a 500
+        ------------- Presione cualquier tecla para continuar -------------""")
+    input()
+    limpiar()
