@@ -1,5 +1,7 @@
 import os
+import time
 import partida
+from tqdm import tqdm
 # Funcion para limpiar pantalla dependiendo del sistema operativo
 def limpiar():
     if os.name == "nt":
@@ -76,3 +78,9 @@ def mensaje_monto():
         ------------- Presione cualquier tecla para continuar -------------""")
     input()
     limpiar()
+
+# Una barra de progreso
+def barra():
+    for i in tqdm(range(100)):
+        time.sleep(0.01)
+    menu.limpiar()

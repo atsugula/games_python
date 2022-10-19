@@ -2,7 +2,8 @@
 import menu
 # Metodo principal
 while True:
-    print("""
+    menu.limpiar()
+    print("""\033[1;34m
     =========================| BLACKJACK DADOS |=========================
         
         Objetivo: Superar a la Casa para pasar los 21 puntos.
@@ -19,14 +20,19 @@ while True:
         decision=int(input('Ingrese la opción que desea: '))
         # Ejecutamos la decision que haya elegido
         if (decision==1):
+            menu.barra()
             menu.reglas()
         elif (decision==2):
+            menu.barra()
             menu.limites()
         elif (decision==3):
+            menu.barra()
             menu.empezar()
         elif (decision==4):
+            menu.barra()
             menu.limpiar()
         elif (decision==5):
+            menu.barra()
             break
         else:
             print('Ups!!! Ingreso una opción no válida, por favor lea')

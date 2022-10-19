@@ -1,20 +1,21 @@
+from jugador import Jugador
 import random
 import menu
-from jugador import Jugador
 # Section de variables globales
 cant_jugadores=0
 apuesta_general=5000
 total_apuesta=0
 jugadores=[] # Variable que guarda la lista de jugadores
-
+colores=[31,32,33,34,35,36,37]
 # Generamos colores por cada jugador
 def generarColor():
-    tiro=random.randint(31,37)
-    return tiro
+    color=random.randrange(7)
+    return color
 # Mostramos todos los datos de los jugadores
 def mostrarTodo():
     datos=""
-    for i in range(1,cant_jugadores+1):
+    menu.barra()
+    for i in range(0,cant_jugadores+1):
         datos+=f"""\033[1;{jugadores[i].color}m
         ==============| LOS DATOS DEL JUGADOR {i} |==============
         NOMBRE DEL JUGADOR      : {jugadores[i].nombre}
@@ -28,6 +29,8 @@ def mostrarTodo():
         PLANTADO                : {jugadores[i].planto}
         """
     print(datos)
+    input()
+    menu.limpiar()
 # Mostramos los dados por cada tiro del jugador
 def pintarDados(d1,d2):
     if (d2==0): # Para cuando se requiera solo pintar uno
@@ -89,7 +92,7 @@ def pedirJugadores():
     for i in range(0, cant_jugadores):
         # Se sigue el orden segun nuestra clase
         dado=0
-        color=generarColor()
+        color=colores[generarColor()]
         turno=False
         nombre=input('Ingrese el nombre del jugador: ')
         planto=False
@@ -109,4 +112,3 @@ def main():
     iniciarCasa()
     pedirJugadores()
     mostrarTodo()
-    input()
