@@ -3,7 +3,8 @@ import menu
 # Metodo principal
 while True:
     menu.limpiar()
-    print("""\033[1;34m
+    menu.logo()
+    print(f"""\033[1;34m
     =========================| BLACKJACK DADOS |=========================
         
         Objetivo: Superar a la Casa para pasar los 21 puntos.
@@ -13,7 +14,6 @@ while True:
         (3) EMPEZAR A JUGAR
         (4) LIMPIAR CONSOLA
         (5) SALIR DEL JUEGO
-
     """)
     # Si digita alguna letra le traiga un mensaje y siga con el menu
     try:
@@ -30,7 +30,6 @@ while True:
             menu.empezar()
         elif (decision==4):
             menu.barra()
-            menu.limpiar()
         elif (decision==5):
             menu.barra()
             break
@@ -38,3 +37,4 @@ while True:
             print('Ups!!! Ingreso una opción no válida, por favor lea')
     except ValueError:
         menu.mensaje_error()
+menu.limpiarCache()

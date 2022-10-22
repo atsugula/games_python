@@ -1,16 +1,29 @@
 import os
+import sys
 import time
 import partida
 from tqdm import tqdm
+# Detectamos que sistema operativo tiene nuestro PC
+def sistema(comando1, comando2): # En base a eso, ejecutamos el respectivo comando
+    if os.name == "nt":
+        os.system(comando1)
+    else:
+        os.system(comando2)
 # Funcion para limpiar pantalla dependiendo del sistema operativo
 def limpiar():
-    if os.name == "nt":
-        os.system("cls")
-    else:
-        os.system("clear")
+    sistema('cls', 'clear')
+
+def mensaje_ganador(nombre,plata): # Mensaje de final de la partida
+    limpiar()
+    print(f"""\033[1;37m
+        =========================| BLACKJACK DADOS |=========================
+                ¡¡¡FELICIDADES {nombre} ACABAS DE GANAR LA RONDA!!!
+                ¡USTED GANA ${plata} QUE SE LE SUMARON A SU CUENTA!""")
+    input()
+    limpiar()
 def reglas():
     limpiar()
-    print("""
+    print("""\033[1;37m
     ===================================| BLACKJACK REGLAS |===================================
 
         * Se reparten dos dados por jugador.
@@ -47,7 +60,7 @@ def reglas():
 
 def limites():
     limpiar()
-    print("""
+    print("""\033[1;37m
     ===================================| BLACKJACK LIMITES |===================================
 
         * Hay un maximo de 8 jugadores por partida.
@@ -66,21 +79,61 @@ def empezar():
     partida.main()
 
 def mensaje_error():
-    print("""
+    limpiar()
+    print("""\033[1;31m
         Ups!!! Ingreso una opción no válida, por favor ingrese solo números
         ------------- Presione cualquier tecla para continuar -------------""")
     input()
     limpiar()
 
+def mensaje_dado(nombre):
+    limpiar()
+    print(f"""\033[1;36m
+                            JUGADOR {nombre}
+            Está apunto de tirar, respire y buena suerte!!!
+        ------ Presione cualquier tecla para continuar ------""")
+    input()
+    limpiar()
+
 def mensaje_monto():
-    print("""
+    limpiar()
+    print("""\033[1;31m
         Ups!!! Ingreso una opción no válida, ingrese un número mayor a 500
         ------------- Presione cualquier tecla para continuar -------------""")
     input()
     limpiar()
 
+def juegoPerdido(nombre):
+    limpiar()
+    print(f"""\033[1;31m
+        Ups!!! El jugador {nombre} acaba de perder, queda por fuera de la ronda
+        --------------- Presione cualquier tecla para continuar ---------------""")
+    input()
+    limpiar()
+
 # Una barra de progreso
 def barra():
+    limpiar()
+    print('\033[1;32m')
     for i in tqdm(range(100)):
         time.sleep(0.01)
-    menu.limpiar()
+    limpiar()
+
+# Borrar cache
+def limpiarCache():
+    sistema('rmdir /s __pycache__', 'rm -r __pycache__')
+    
+# Pintamos el logo
+def logo():
+    print(f"""\033[1;35m
+                           .------------------.
+                         ./                    \.
+                        ./   \.    ./\.    ./   \.
+                       .|     \.  ./  \.  ./     |.
+                       .|      \../    \../      |.
+                       .|       \. ATSU ./       |.
+                       .|      ./\.    ./\.      |.
+                       .|     ./  \.  ./  \.     |.
+                        .\   ./    \../    \.   /.
+                         .\                    /.
+                           .------------------.""")
